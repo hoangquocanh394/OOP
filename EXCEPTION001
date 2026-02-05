@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+class Amount{
+    private String currency;
+    private int amount;
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+    
+    
+    public void add(Amount a){
+        if(!currency.equals(a.currency)){
+            System.out.println("Currency doesn't match");
+        }else{
+            System.out.println(amount+a.amount);
+        }
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            Amount a=new Amount();
+            a.setCurrency(sc.next());
+            a.setAmount(sc.nextInt());
+            Amount b=new Amount();
+            b.setCurrency(sc.next());
+            b.setAmount(sc.nextInt());
+            a.add(b);
+        }
+        sc.close();
+    }
+}
