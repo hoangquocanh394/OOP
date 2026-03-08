@@ -1,0 +1,33 @@
+class Person{
+    private String name;
+    private String address;
+    public Person(String name,String address){
+        this.name=name;
+        this.address=address;
+    }
+    public String toString(){
+        return this.name+" - "+this.address;
+    }
+}
+class Student extends Person{
+    private int credits;
+    public Student(String name,String address){
+        super(name,address);
+    }
+    public void study(){
+        credits+=1;
+    }
+    public int credits(){
+        return this.credits;
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Student a=new Student("Ollie","6381 Hollywood Blvd. Los Angeles 90028");
+        System.out.println(a.toString());
+        System.out.println("Study credits "+a.credits());
+        a.study();
+        System.out.println("Study credits "+a.credits());
+    }
+}
