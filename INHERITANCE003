@@ -1,0 +1,46 @@
+class Person{
+    private String name;
+    private String address;
+    public Person(String name,String address){
+        this.name=name;
+        this.address=address;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public String getAddress(){
+        return this.address;
+    }
+    public String inperson(){
+        return this.name + " - " + this.address;
+    }
+}
+class Student extends Person{
+    private int credits;
+    private String studentID;
+    public Student(String name,String address, String studentID){
+        super(name,address);
+        this.studentID=studentID;
+    }
+    public String getStudentID(){
+        return this.studentID;
+    }
+    public int study(){
+        credits+=1;
+        return credits;
+    }
+    public void in(){
+        System.out.println("Study credits " + credits);
+    }
+    
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Student a=new Student("Ollie","6381 Hollywood Blvd. Los Angeles","90028");
+        System.out.println(a.inperson()+ " "+a.getStudentID());
+        a.in();
+        a.study();
+        a.in();
+    }
+}
