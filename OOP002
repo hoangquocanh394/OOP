@@ -1,0 +1,43 @@
+import java.util.Scanner;
+class Inventor{
+    private String name;
+    private String field;
+    private String nationality;
+    public Inventor(String name,String field,String nationality){
+        this.name=name;
+        this.field=field;
+        this.nationality=nationality;
+    }
+    public String toString(){
+        return "Inventor[name="+this.name+", field="+this.field+", nationality="+this.nationality+"]]";
+    }
+}
+class Patent{
+    private String title;
+    private int year;
+    private Inventor inventor;
+    public Patent(String title,int year,Inventor inventor){
+        this.title=title;
+        this.year=year;
+        this.inventor=inventor;
+    }
+    public String toString(){
+        return "Patent[title="+this.title+", year="+this.year+", ";
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String a=sc.nextLine();
+        String b=sc.nextLine();
+        String c=sc.nextLine();
+        if(c.equals("VN")||c.equals("INT")){
+            Inventor i=new Inventor(a,b,c);
+            Patent p=new Patent(sc.nextLine(),sc.nextInt(),i);
+            System.out.println(p.toString()+i.toString());
+        }else{
+            System.out.println("Invalid nationality. Only 'VN' or 'INT' allowed.");
+        }
+        sc.close();
+    }
+}
