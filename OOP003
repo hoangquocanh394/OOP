@@ -1,0 +1,45 @@
+import java.util.Scanner;
+import java.lang.Math;
+class Misician{
+    private String name;
+    private String style;
+    private String nationality;
+    public Misician(String name,String nationality,String style){
+        this.name=name;
+        this.nationality=nationality;
+        this.style=style;
+    }
+    public String toString(){
+        return "Musician[name="+this.name+", nationality="+this.nationality+", style="+this.style+"]]";
+    }
+}
+class Song{
+    private String title;
+    private String genre;
+    private int year;
+    private Misician misician;
+    public Song(String title,String genre,int year,Misician misician){
+        this.title=title;
+        this.genre=genre;
+        this.year=year;
+        this.misician=misician;
+    }
+    public String toString(){
+        return "Song[title="+this.title+", genre="+this.genre+", year="+this.year+", ";
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String a=sc.nextLine();
+        String b=sc.nextLine();
+        if(b.equals("VN")||b.equals("INT")){
+            Misician i=new Misician(a,b,sc.nextLine());
+            Song p=new Song(sc.nextLine(),sc.nextLine(),sc.nextInt(),i);
+            System.out.println(p.toString()+i.toString());
+        }else{
+            System.out.println("Invalid nationality. Only 'VN' or 'INT' allowed.");
+        }
+        sc.close();
+    }
+}
