@@ -1,0 +1,83 @@
+import java.util.Scanner;
+class Teacher{
+    private String name;
+    private double baseSalary;
+    public Teacher(String name,double baseSalary){
+        this.name=name;
+        this.baseSalary=baseSalary;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public double getbaseSalary(){
+        return this.baseSalary;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setbaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+    public void getinfo(){
+        
+    }
+    public double calculateSalary(){
+        return this.baseSalary;
+    }
+}
+class PermanentLecturer extends Teacher{
+    private double researchAllowance;
+    public PermanentLecturer(String name,double baseSalary,double researchAllowance){
+        super(name,baseSalary);
+        this.researchAllowance=researchAllowance;
+    }
+    public double calculateSalary(){
+        return this.getbaseSalary()+this.researchAllowance;
+    }
+    public void getinfo(){
+        System.out.println("Loại giảng viên: Permanent");
+        System.out.println("Họ tên: "+this.getName());
+        System.out.println("Lương thực nhận: "+this.calculateSalary());
+    }
+}
+class VisitingLecturer extends Teacher{
+    private int teachingHours;
+    private double paymentPerHour;
+    public VisitingLecturer(String name,int teachingHours,double paymentPerHour){
+        super(name,0);
+        this.teachingHours=teachingHours;
+        this.paymentPerHour=paymentPerHour;
+    }
+    public double calculateSalary(){
+        return this.paymentPerHour*this.teachingHours;
+    }
+    public void getinfo(){
+        System.out.println("Loại giảng viên: Visiting");
+        System.out.println("Họ tên: "+this.getName());
+        System.out.println("Lương thực nhận: "+this.calculateSalary());
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("--- Thông tin giảng viên ---");
+        for(int i=0;i<2;i++){
+            String a=sc.nextLine();
+            String b=sc.nextLine();
+            if(a.equals("PermanentLecturer")){
+                double c=sc.nextDouble();
+                double d=sc.nextDouble();
+                PermanentLecturer f=new PermanentLecturer(b,c,d);
+                f.getinfo();
+            }else{
+                int c=sc.nextInt();
+                double d=sc.nextDouble();
+                VisitingLecturer p=new VisitingLecturer(b,c,d);
+                p.getinfo();
+            }
+            sc.nextLine();
+        }
+        sc.close();
+    }
+}
