@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+class Item{
+    private String name;
+    private int weight;
+    public Item(String name,int weight){
+        this.name=name;
+        this.weight=weight;
+    }
+    public Item(String name){
+        this.name=name;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public int getWeight(){
+        return this.weight;
+    }
+}
+abstract class Box{
+    abstract void add(Item item);
+    abstract boolean isInBox(Item item);
+}
+class BoxWithMaxWeight extends Box{
+    private ArrayList<Item> ArrayList;
+    private int maxWeight;
+    public BoxWithMaxWeight(int maxWeight){
+        this.maxWeight=maxWeight;
+        this.ArrayList=new ArrayList<>();
+    }
+    public int Tong(ArrayList<Item> ArrayList){
+        int k=0;
+        for(Item i:ArrayList){
+            k+=i.getWeight();
+        }
+        return k;
+    }
+    public void add(Item item){
+        if(item.getWeight()<=this.maxWeight-this.Tong(ArrayList)){
+            this.ArrayList.add(item);
+        }
+    }
+    public boolean isInBox(Item item){
+        return this.ArrayList.contains(item);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        BoxWithMaxWeight b=new BoxWithMaxWeight(10);
+        Item i1=new Item("Saludo",5);
+        Item i2=new Item("Pirkka",5);
+        Item i3=new Item("Kopi Luwak",5);
+        b.add(i1);
+        b.add(i2);
+        b.add(i3);
+        System.out.println(b.isInBox(i1));
+        System.out.println(b.isInBox(i2));
+        System.out.println(b.isInBox(i3));
+    }
+}
