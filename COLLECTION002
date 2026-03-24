@@ -1,0 +1,50 @@
+import java.util.HashMap;
+class Warehouse{
+    private String product;
+    private int price;
+    private int stock;
+    private HashMap<String,Integer> map = new HashMap<>();
+    private HashMap<String,Integer> s = new HashMap<>();
+    public void addProduct(String product, int price, int stock){
+        map.put(product,price);
+        s.put(product, stock);
+    }
+    public void price(String product){
+        if(map.containsKey(product)){
+            System.out.println(product+": "+map.get(product));
+        }else{
+            System.out.println(product+": -99");
+        }
+    }
+    public void stock(String product){
+        if(map.containsKey(product)){
+            System.out.println(product+":  "+s.get(product));//day phai co 2 dau cach moi dung
+        }else{
+            System.out.println(product+": 0");
+        }
+    }
+    public void take(String product){
+        if(!s.containsKey(product) || s.get(product)==0){
+            System.out.println("taking "+product+" false");
+        }else{
+            System.out.println("taking "+product+" true");
+            int k=s.get(product);
+            s.put(product,k -1);
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Warehouse w=new Warehouse();
+        w.addProduct("coffee", 5, 1);
+        System.out.println("stock:");
+        w.stock("coffee");
+        w.stock("sugar");
+        w.take("coffee");
+        w.take("coffee");
+        w.take("sugar");
+        System.out.println("stock:");
+        w.stock("coffee");
+        w.stock("sugar");
+    }
+}
