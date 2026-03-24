@@ -1,0 +1,28 @@
+import java.util.HashMap;
+class Warehouse{
+    private String product;
+    private int price;
+    private int stock;
+    private HashMap<String,Integer> map = new HashMap<>();
+    public void addProduct(String product, int price, int stock){
+        map.put(product,price);
+    }
+    public void price(String product){
+        if(map.containsKey(product)){
+            System.out.println(product+": "+map.get(product));
+        }else{
+            System.out.println(product+": -99");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Warehouse w=new Warehouse();
+        w.addProduct("milk", 3, 10);
+        w.addProduct("coffee", 5, 7);
+        System.out.println("prices:");
+        w.price("milk");
+        w.price("coffee");
+        w.price("sugar");
+    }
+}
