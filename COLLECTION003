@@ -1,0 +1,61 @@
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;// cần import mới chạy
+class Warehouse{
+    private String product;
+    private int price;
+    private int stock;
+    private HashMap<String,Integer> map = new HashMap<>();
+    private HashMap<String,Integer> s = new HashMap<>();
+    private HashSet<String> set = new HashSet<>();
+    public void addProduct(String product, int price, int stock){
+        map.put(product, price);
+        s.put(product, stock);
+    }
+    public void price(String product){
+        if(map.containsKey(product)){
+            System.out.println(product+": "+map.get(product));
+        }else{
+            System.out.println(product+": -99");
+        }
+    }
+    public void stock(String product){
+        if(map.containsKey(product)){
+            System.out.println(product+":  "+s.get(product));
+        }else{
+            System.out.println(product+": 0");
+        }
+    }
+    public void take(String product){
+        if(!s.containsKey(product) || s.get(product)==0){
+            //System.out.println("taking "+product+" false");
+        }else{
+            //System.out.println("taking "+product+" true");
+            int k=s.get(product);
+            s.put(product,k -1);
+        }
+    }
+    public void products(){
+        for (Map.Entry<String, Integer> entry : s.entrySet()) {
+            if(entry.getValue()>0){
+                set.add(entry.getKey());
+            }
+        }
+        for (String key : set) {
+            System.out.println(key);
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Warehouse w=new Warehouse();
+        w.addProduct("milk", 3, 10);
+        w.addProduct("coffee", 5, 6);
+        w.addProduct("buttermilk", 2, 2);
+        w.addProduct("yogurt", 2, 20);
+        w.take("buttermilk");
+        w.take("milk");
+        w.take("buttermilk");
+        w.products();
+    }
+}
