@@ -1,0 +1,38 @@
+
+import java.util.Scanner;
+
+class Song{
+    private String name;
+    private String author;
+    private int duration;
+    public Song(String name,String author,int duration){
+        this.name=name;
+        this.author=author;
+        this.duration=duration;
+    }
+    public void equals(Song song){
+        if(this.author.equals(song.author) && this.name.equals(song.name) && this.duration==song.duration){
+            System.out.println("true");
+        }else{
+            System.out.println("false");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            String k1=sc.nextLine();
+            String k2=sc.nextLine();
+            String[] s1= k1.split(" ");
+            String[] s2= k2.split(" ");
+            Song so1=new Song(s1[0],s1[1],Integer.parseInt(s1[2]));
+            Song so2=new Song(s2[0],s2[1],Integer.parseInt(s2[2]));
+            so1.equals(so2);
+        }
+        sc.close();
+    }
+}
