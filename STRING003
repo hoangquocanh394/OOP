@@ -1,0 +1,18 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            String k=sc.nextLine();
+            String h=sc.nextLine();
+            k=k.toLowerCase();
+            h=h.toLowerCase();
+            System.out.println(k.equals(h));
+        }
+        sc.close();
+    }
+}
