@@ -1,0 +1,75 @@
+import java.util.*;
+interface Identifiable{
+    public String getId();
+}
+interface Birthable{
+    public String getBirthDate();
+}
+class Citizen implements Identifiable,Birthable{
+    private String name;
+    private int age;
+    private String id;
+    private String birthDate; 
+    public Citizen(String name,int age,String id,String birthDate){
+        this.name=name;
+        this.age=age;
+        this.id=id;
+        this.birthDate=birthDate;
+    }
+    public String getId(){
+        return this.id;
+    }
+    public String getBirthDate(){
+         return this.birthDate;
+    }
+}
+class Pet implements Birthable{
+    private String name;
+    private String birthDate;
+    public Pet(String name,String birthDate){
+        this.name=name;
+        this.birthDate=birthDate;
+    }
+    public String getBirthDate(){
+         return this.birthDate;
+    } 
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            String k=sc.nextLine();
+            List<Citizen> c= new ArrayList<>();
+            List<Pet> p=new ArrayList<>();
+            while(!k.equals("End")){
+                String[] a=k.split(" ");
+                if(a[0].equals("Citizen")){
+                    Citizen e=new Citizen(a[1],Integer.parseInt(a[2]),a[3],a[4]);
+                    c.add(e);
+                }else{
+                    Pet r=new Pet(a[1],a[2]);
+                    p.add(r);
+                }
+                k=sc.nextLine();
+            }
+            int y=sc.nextInt();
+            sc.nextLine();
+            for(Citizen i:c){
+                String[] j=i.getBirthDate().split("/");
+                if(Integer.parseInt(j[2])==y){
+                    System.out.println(i.getBirthDate());
+                }
+            }
+            for(Pet i:p){
+                String[] j=i.getBirthDate().split("/");
+                if(Integer.parseInt(j[2])==y){
+                    System.out.println(i.getBirthDate());
+                }
+            }
+        }
+        sc.close();
+    }
+}
