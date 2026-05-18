@@ -1,0 +1,65 @@
+import java.util.*;
+class UsedCarException extends Exception{
+    public UsedCarException(String s){
+        super(s);
+    }
+}
+class UsedCar{
+    private String VIN;
+    private String make;
+    private int year;
+    private int mileage;
+    private double price;
+    public UsedCar(String VIN,String make,int year,int mileage,double price) throws UsedCarException{
+        this.VIN=VIN;
+        this.make=make;
+        this.year=year;
+        this.mileage=mileage;
+        this.price=price;
+        if(this.VIN.length()!=4){
+            throw new UsedCarException("Invalid UsedCar: VIN "+this.VIN);
+        }
+        if(!this.make.equals("Ford")&&!this.make.equals("Honda")&&!this.make.equals("Toyota")&&!this.make.equals("Chrysler")){
+            throw new UsedCarException("Invalid UsedCar: VIN "+this.VIN);
+        }
+        if(year<1990||year>2014){
+            throw new UsedCarException("Invalid UsedCar: VIN "+this.VIN);
+        }
+        if(mileage<0||price<0){
+            throw new UsedCarException("Invalid UsedCar: VIN "+this.VIN);
+        }
+    }
+    public void display(){
+        System.out.printf("UsedCar{vin='%s', make='%s', year=%d, mileage=%d, price=%.1f}",VIN,make,year,mileage,price);
+        System.out.println();
+    }
+}
+public class Main{
+    public static void main(String[] agrs){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        ArrayList<UsedCar> a=new ArrayList<>();
+        while(t>0){
+            t--;
+            String str=sc.nextLine();
+            String k[]=str.split(",");
+            try{
+                UsedCar u=new UsedCar(k[0],k[1],Integer.parseInt(k[2]),Integer.parseInt(k[3]),Double.parseDouble(k[4]));
+                a.add(u);
+            }catch(UsedCarException e){
+                System.out.println(e.getMessage());
+            }
+            if(t==0){
+                System.out.println("List of successfully constructed UsedCar objects:");
+                if(a.size()==0){
+                    System.out.println("No used cars");
+                }else{
+                    for(int i=0;i<a.size();i++){
+                        a.get(i).display();
+                    }
+                }
+            }
+        }
+    }
+}
