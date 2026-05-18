@@ -1,0 +1,95 @@
+import java.util.*;
+abstract class Asset{
+    private String name;
+    private double value;
+    private Date acquisitionDate;
+    public Asset(String name,double value){
+        this.name=name;
+        this.value=value;
+    }
+    public abstract double getDepreciation();
+    public double getValue(){
+        return this.value;
+    }
+}
+class FixedAsset extends Asset{
+    private int usefulLife;
+    public FixedAsset(String name,double value,int usefulLife){
+        super(name,value);
+        this.usefulLife=usefulLife;
+    }
+    public double getDepreciation(){
+        return getValue() / (double)usefulLife;
+    }
+}
+class CurrentAsset extends Asset{
+    private int liquidationValue;
+    public CurrentAsset(String name,double value,int liquidationValue){
+        super(name,value);
+        this.liquidationValue=liquidationValue;
+    }
+    public double getDepreciation(){
+        return getValue() * 0.1;
+    }
+}
+class IntangibleAsset extends Asset{
+    private int amortizationPeriod;
+    public IntangibleAsset(String name,double value,int amortizationPeriod){
+        super(name,value);
+        this.amortizationPeriod=amortizationPeriod;
+    }
+    public double getDepreciation(){
+        return getValue() / (double)amortizationPeriod;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        double sum1=0;
+        double sum2=0;
+        while(t>0){
+            t--;
+            String s=sc.nextLine();
+            String[] k=s.split(" ");
+            if(k[0].equals("FixedAsset")){
+                FixedAsset a=new FixedAsset(k[1],Double.parseDouble(k[2]),Integer.parseInt(k[3]));
+                System.out.println("Asset Name: "+k[1]);
+                System.out.printf("Asset Value: %.1f",Double.parseDouble(k[2]));
+                System.out.println();
+                System.out.printf("Depreciation: %.1f",a.getDepreciation());
+                System.out.println();
+                System.out.println("---------------------------");
+                sum1+=Double.parseDouble(k[2]);
+                sum2+=a.getDepreciation();
+            }else if(k[0].equals("CurrentAsset")){
+                CurrentAsset a=new CurrentAsset(k[1],Double.parseDouble(k[2]),Integer.parseInt(k[3]));
+                System.out.println("Asset Name: "+k[1]);
+                System.out.printf("Asset Value: %.1f",Double.parseDouble(k[2]));
+                System.out.println();
+                System.out.printf("Depreciation: %.1f",a.getDepreciation());
+                System.out.println();
+                System.out.println("---------------------------");
+                sum1+=Double.parseDouble(k[2]);
+                sum2+=a.getDepreciation();
+            }else{
+                IntangibleAsset a=new IntangibleAsset(k[1],Double.parseDouble(k[2]),Integer.parseInt(k[3]));
+                System.out.println("Asset Name: "+k[1]);
+                System.out.printf("Asset Value: %.1f",Double.parseDouble(k[2]));
+                System.out.println();
+                System.out.printf("Depreciation: %.1f",a.getDepreciation());
+                System.out.println();
+                System.out.println("---------------------------");
+                sum1+=Double.parseDouble(k[2]);
+                sum2+=a.getDepreciation();
+            }
+            if(t==0){
+                System.out.printf("Total Value of Assets: %.1f",sum1);
+                System.out.println();
+                System.out.printf("Total Depreciation of Assets: %.1f",sum2);
+            }
+        }
+        sc.close();
+    }
+}
