@@ -1,0 +1,24 @@
+import java.util.*;
+public class Main{
+    public static String findLongestWord(String sentence) {//phải đưa vào trong class và phải dùng static
+            String[] k=sentence.split(" ");
+            String index="";
+            for(int i=0;i<k.length;i++){
+                if(k[i].length()>=index.length()){
+                    index=k[i];
+                }
+            }
+            return index;
+        }
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            String s=sc.nextLine();
+            System.out.println(findLongestWord(s));
+        }
+        sc.close();
+    }
+}
