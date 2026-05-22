@@ -1,0 +1,55 @@
+import java.util.*;
+interface Moveable{
+    public void move(int dx, int dy);
+}
+class Organism implements Moveable{
+    private int x;
+    private int y;
+    public Organism(int x,int y){
+        this.x=x;
+        this.y=y;
+    }
+    public void move(int dx, int dy){
+        this.x+=dx;
+        this.y+=dy;
+    }
+    public String toString(){
+        return "x:"+this.x+";y:"+this.y;
+    }
+}
+class Herd{
+    private ArrayList<Organism> a;
+    public Herd(){
+        a=new ArrayList<>();
+    }
+    public void addToHerd(Organism organism){
+        a.add(organism);
+    }
+    public void move(int dx,int dy){
+        for(Organism i:a){
+            i.move(dx,dy);
+        }
+    }
+    public ArrayList<Organism> getA(){
+        return this.a;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        Herd h=new Herd();
+        while(t>0){
+            t--;
+            Organism o=new Organism(sc.nextInt(),sc.nextInt());
+            h.addToHerd(o);
+            if(t==0){
+                h.move(1,1);
+                for(Organism i:h.getA()){
+                    System.out.println(i.toString());
+                }
+            }
+        }
+    }
+}
