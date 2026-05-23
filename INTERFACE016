@@ -1,0 +1,73 @@
+import java.util.*;
+interface Callable{
+    public void call();
+}
+interface Browsable{
+    public void browse();
+}
+class Smartphone implements Callable,Browsable{
+    private ArrayList<String> numbers=new ArrayList<>();
+    private ArrayList<String> urls=new ArrayList<>();
+    public Smartphone(ArrayList<String> numbers,ArrayList<String> urls){
+        this.numbers=numbers;
+        this.urls=urls;
+    }
+    public void call(){
+        for(String i:numbers){
+            boolean k=true;
+            for(int j=0;j<i.length();j++){
+                if(i.charAt(j)<'0'||i.charAt(j)>'9'){
+                    k=false;
+                    break;
+                }
+            }
+            if(k==true){
+                System.out.println("Calling... "+i);
+            }else{
+                System.out.println("Invalid number!");
+            }
+        }
+    }
+    public void browse(){
+        for(String i:urls){
+            boolean k=true;
+            for(int j=0;j<i.length();j++){
+                if(i.charAt(j)>='0'&&i.charAt(j)<='9'){
+                    k=false;
+                    break;
+                }
+            }
+            if(k==false){
+                System.out.println("Invalid URL!");
+            }else{
+                System.out.println("Browsing: "+i+"!");
+            }
+        }
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            String s1=sc.nextLine();
+            String[] k1=s1.split(" ");
+            String s2=sc.nextLine();
+            String[] k2=s2.split(" ");
+            ArrayList<String> n=new ArrayList<>();
+            ArrayList<String> u=new ArrayList<>();
+            for(String i:k1){
+                n.add(i);
+            }
+            for(String i:k2){
+                u.add(i);
+            }
+            Smartphone p=new Smartphone(n,u);
+            p.call();
+            p.browse();
+        }
+        sc.close();
+    }
+}
