@@ -1,0 +1,121 @@
+import java.util.*;
+abstract class Product{
+    private String name;
+    private double price;
+    private int quantity;
+    public Product(String name,double price,int quantity){
+        this.name=name;
+        this.price=price;
+        this.quantity=quantity;
+    }
+    public abstract double calculateCost(int quality);
+    public void displayDetails(){
+        System.out.println("Name: "+this.name);
+        System.out.println("Price: $"+this.price);
+        System.out.println("Available Quantity: "+quantity);
+    }
+    public String getName(){
+        return this.name;
+    }
+    public double getPrice(){
+        return this.price;
+    }
+    public int getQuantity(){
+        return this.quantity;
+    }
+    public void setQuantity(int quantity){
+        this.quantity=quantity;
+    }
+} 
+class Book extends Product{
+    private String author;
+    public Book(String name,double price,int quantity,String author){
+        super(name,price,quantity);
+        this.author=author;
+    }
+    public double calculateCost(int quality){
+        return this.getPrice()*(double)quality;
+    }
+    public void displayDetails(){
+        super.displayDetails();
+        System.out.println("Author: "+this.author);
+    }
+}
+class Electronics extends Product{
+    private String brand;
+    public Electronics(String name,double price,int quantity,String brand){
+        super(name,price,quantity);
+        this.brand=brand;
+    }
+    public double calculateCost(int quality){
+        return this.getPrice()*(double)quality* 1.1;
+    }
+    public void displayDetails(){
+        super.displayDetails();
+        System.out.println("Brand: "+this.brand);
+    }
+}
+class User{
+    private String username;
+    private double totalSpent;
+    public User(String username){
+        this.username=username;
+        this.totalSpent=0;
+    }
+    public String getUsername(){
+        return this.username;
+    }
+    public double getTotalSpent(){
+        return this.totalSpent;
+    }
+    public void buyProduct(Product product, int quality){
+        if(quality<=product.getQuantity()){
+            System.out.println("User: "+this.username+" bought "+quality+" "+product.getName()+" for $"+product.calculateCost(quality));
+            product.setQuantity(product.getQuantity()-quality);
+            this.totalSpent+=product.calculateCost(quality);
+        }else{
+            System.out.println("Insufficient quantity of "+product.getName()+" available.");
+        }
+    }
+}
+public class Main{
+    public static void sort(User[] user){//kho o day
+        for(int i=0;i<user.length-1;i++){
+            for(int j=0;j<user.length-i-1;j++){
+                if(user[j].getTotalSpent()<user[j+1].getTotalSpent()){
+                    User tmp=user[j];
+                    user[j]=user[j+1];
+                    user[j+1]=tmp;
+                }
+            }
+        }
+    }
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t>0){
+            t--;
+            Product a=new Electronics("laptop",20,10,"Dell");
+            Product b=new Book("Harry Potter",10,12,"camnh");
+            User user1=new User("Alice");
+            User user2=new User("Bob");
+            User user3=new User("Charlie");
+            user1.buyProduct(a,3);
+            user1.buyProduct(b,10);
+            user2.buyProduct(a,1);
+            user3.buyProduct(b,5);
+            System.out.println("====");
+            System.out.println("Users with Highest Total Spent:");
+            User[] user={user1,user2,user3};
+            sort(user);
+            for(int i=0;i<user.length;i++){
+                System.out.println(i+1+". "+user[i].getUsername()+": $"+user[i].getTotalSpent());
+            }
+            System.out.println("====");
+            a.displayDetails();
+            System.out.println("---");
+            b.displayDetails();
+        }
+        sc.close();
+    }
+}
