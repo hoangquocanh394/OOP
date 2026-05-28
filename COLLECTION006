@@ -1,0 +1,29 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t>0){
+            t--;
+            String s=sc.nextLine();
+            String[] a=s.split(" ");
+            HashMap<Integer,Integer> map = new HashMap<>();
+            for(int i=0;i<a.length/2;i++){
+                int key=Integer.parseInt(a[2*i+1]);
+                map.put(key,map.getOrDefault(key, 0)+1);
+            }
+            int min=Integer.MAX_VALUE;
+            int k=Integer.MAX_VALUE;
+            for (Integer key : map.keySet()) {
+                if(min>map.get(key) || (k>key&&min==map.get(key))){
+                    min=map.get(key);
+                    k=key;
+                }
+            }
+            System.out.println(k);
+        }
+        sc.close();
+	}
+}
