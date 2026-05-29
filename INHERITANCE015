@@ -1,0 +1,71 @@
+import java.util.*;
+abstract class Device{
+    private double basePrice;
+    public Device(double basePrice){
+        this.basePrice=basePrice;
+    }
+    public abstract double calculateWarrantyCost();
+    public double getBasePrice(){
+        return this.basePrice;
+    }
+    public abstract String getType();
+}
+class Laptop extends Device{
+    private int ramSize;
+    public Laptop(double basePrice,int ramSize){
+        super(basePrice);
+        this.ramSize=ramSize;
+    }
+    public double calculateWarrantyCost(){
+        return this.getBasePrice() * 0.07;
+    }
+    public int getRamSize(){
+        return ramSize;
+    }
+    public String getType(){
+        return "Laptop";
+    }
+}
+class Smartphone extends Device{
+    private double screenSize;
+    public Smartphone(double basePrice,double screenSize){
+        super(basePrice);
+        this.screenSize=screenSize;
+    }
+    public double calculateWarrantyCost(){
+        return this.getBasePrice() * 0.05 + screenSize * 50;
+    }
+    public double getScreenSize(){
+        return screenSize;
+    }
+    public String getType(){
+        return "Smartphone";
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        double sum=0;
+        System.out.println("Danh sách thiết bị và chi phí bảo hành:");
+        while(t-->0){
+            String k=sc.nextLine();
+            String s[]=k.split(" ");
+            if(s[0].equals("Laptop")){
+                Laptop l=new Laptop(Integer.parseInt(s[1]),Integer.parseInt(s[2]));
+                sum+=l.calculateWarrantyCost();
+                System.out.printf("Laptop - Giá gốc: %.2f, Dung lượng RAM: %d GB, Chi phí bảo hành: %.2f",l.getBasePrice(),l.getRamSize(),l.calculateWarrantyCost());
+            }else if(s[0].equals("Smartphone")){
+                Smartphone l=new Smartphone(Integer.parseInt(s[1]),Integer.parseInt(s[2]));
+                sum+=l.calculateWarrantyCost();
+                System.out.printf("Smartphone - Giá gốc: %.2f, Kích thước màn hình: %.2f inch, Chi phí bảo hành: %.2f",l.getBasePrice(),l.getScreenSize(),l.calculateWarrantyCost());
+            }
+            System.out.println();
+            if(t==0){
+                System.out.printf("Tổng chi phí bảo hành: %.2f",sum);
+                System.out.println();
+            }
+        }
+    }
+}
