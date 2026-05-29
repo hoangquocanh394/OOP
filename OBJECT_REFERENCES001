@@ -1,0 +1,32 @@
+import java.util.*;
+class SimpleDate{
+    private int day;
+    private int month;
+    private int year;
+    public SimpleDate(int day,int month,int year){
+        this.day=day;
+        this.month=month;
+        this.year=year;
+    }
+    public boolean equals(Object obj){
+        if(!(obj instanceof SimpleDate)){
+            return false;
+        }
+        SimpleDate s=(SimpleDate) obj;//phai ep kieu tu object ve class
+        if(this.day==s.day&&this.month==s.month&&this.year==s.year){
+            return true;
+        }
+        return false;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        SimpleDate a=new SimpleDate(1,2,2000);
+        String s="heh";
+        SimpleDate b=new SimpleDate(5,2,2012);
+        SimpleDate c=new SimpleDate(1,2,2000);
+        System.out.println(a.equals(s));
+        System.out.println(a.equals(b));
+        System.out.println(a.equals(c));
+    }
+}
