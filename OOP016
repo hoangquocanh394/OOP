@@ -1,0 +1,63 @@
+import java.util.*;
+class Money{
+    private int euros;
+    private int cent;
+    public Money(int euros,int cent){
+        this.euros=euros;
+        this.cent=cent;
+    }
+    public String toString() {
+        return String.format("%.2fe", euros + cent *0.01);
+    }
+    public Money plus(Money added){
+        Money m=new Money(0,0);
+        m.euros=this.euros+added.euros;
+        m.cent=this.cent+added.cent;
+        return m;
+    }
+    public boolean lessThan(Money compared){
+        if(this.euros<compared.euros){
+            return false;
+        }else if(this.euros==compared.euros && this.cent<compared.cent){
+            return false;
+        }
+        return true;
+    }
+    public Money minus(Money minus){
+        Money m=new Money(0,0);
+        if(this.lessThan(minus)==true){
+            m.euros=this.euros-minus.euros;
+            m.cent=this.cent-minus.cent;
+            if(this.cent-minus.cent<0){
+                m.euros-=1;
+                m.cent=(this.cent-minus.cent)*-1;
+            }
+        }
+        return m;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Money a=new Money(10,8);
+        Money b=new Money(5,5);
+        Money c=new Money(10,8);
+        System.out.println(a.toString());
+        System.out.println(b.toString());
+        c=c.plus(b);
+        System.out.println(c.toString());
+        Money u=new Money(10,0);
+        Money y=new Money(3,0);
+        Money w=new Money(5,0);
+        System.out.println(y.lessThan(u));
+        System.out.println(w.lessThan(y));
+        Money m=new Money(10,0);
+        Money n=new Money(3,50);
+        System.out.println(m.toString());
+        System.out.println(n.toString());
+        Money o=new Money(10,0);
+        o=o.minus(n);
+        System.out.println(o.toString());
+        o=o.minus(m);
+        System.out.println(o.toString());
+    }
+}
