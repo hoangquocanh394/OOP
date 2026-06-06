@@ -1,0 +1,47 @@
+import java.util.*;
+class InsufficientFundsException extends Exception{
+    public InsufficientFundsException(String s){
+        super(s);
+    }
+}
+class BankAccount{
+    private double balance;
+    public BankAccount(double balance){
+        this.balance=balance;
+    }
+    public void withdraw(double amount) throws InsufficientFundsException{
+        if(amount<0)
+            throw new IllegalArgumentException();
+        if(amount>balance)
+            throw new InsufficientFundsException(String.format("Lỗi: Số dư không đủ để rút %.1f",amount));
+        balance-=amount;
+    }
+    public double getBalance(){
+        return balance;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            BankAccount b=new BankAccount(sc.nextDouble());
+            sc.nextLine();
+            while(true){
+                String s=sc.nextLine();
+                try{
+                    b.withdraw(Double.parseDouble(s));
+                    System.out.printf("Rút tiền thành công! Số dư còn lại: %.1f",b.getBalance());
+                    System.out.println();
+                    break;
+                }catch(NumberFormatException e){
+                    System.out.println("Lỗi: Vui lòng nhập số hợp lệ!");
+                }catch(IllegalArgumentException e){
+                    System.out.println("Lỗi: Số tiền rút không được âm!");
+                }catch(InsufficientFundsException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+}
