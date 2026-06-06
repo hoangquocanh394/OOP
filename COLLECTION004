@@ -1,0 +1,94 @@
+import java.util.*;
+class Item{
+    private String product;
+    private int quantity;
+    private int unitPrice;
+    private int originalQuantity;
+    public Item(String product,int quantity,int unitPrice){
+        this.product=product;
+        this.quantity=quantity;
+        this.unitPrice=unitPrice;
+    }
+    public Item(String product,int quantity){
+        this.product=product;
+        this.quantity=quantity;
+    }
+    public String getProduct(){
+        return product;
+    }
+    public int getQuantity(){
+        return quantity;
+    }
+    public int getUnitPrice(){
+        return unitPrice;
+    }
+    public int getOriginalQuantity(){
+        return originalQuantity;
+    }
+    public void setQuantity(int quantity){
+        this.quantity=quantity;
+    }
+    public int getTotalPrice(){
+        return quantity * unitPrice;
+    }
+    public void printItemInfo(){
+        System.out.println("Product: "+product+" has quantity "+quantity+" with price: "+this.getTotalPrice());
+    }
+}
+class Warehouse{
+    private HashMap<String,Item> items=new HashMap<>();
+    public HashMap<String,Item> getItems(){
+        return items;
+    }
+    public void importProduct(Item i){
+        items.put(i.getProduct(),i);
+    }
+    public Item getItem(String product){
+        return items.get(product);
+    }
+    public void removeProduct(String product,int quantity){
+        int k=items.get(product).getQuantity()-quantity;
+        items.get(product).setQuantity(k);
+        items.put(product,items.get(product));
+        items.get(product).printItemInfo();
+    }
+    public void decreaseQuantityInWarehouseByOne(){
+        for(Map.Entry<String,Item> m:items.entrySet()){
+            m.getValue().setQuantity(m.getValue().getQuantity()-1);
+            items.put(m.getKey(),m.getValue());
+            m.getValue().printItemInfo();
+        }
+    }
+    public void takeFromItemToWarehouse(List<Item> itemsToCheck, String product, int quantity){
+        for(Item i:itemsToCheck){
+            if(i.getProduct().equals(product)){
+                if(quantity>i.getQuantity()){
+                    i.setQuantity(i.getQuantity()*2);
+                }else{
+                    i.setQuantity(i.getQuantity()+quantity);
+                }
+                i.printItemInfo();
+            }
+        }
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Item a=new Item("milk",4,2);
+        a.printItemInfo();
+        Item b=new Item("buttermilk",10,2);
+        b.printItemInfo();
+        Warehouse c= new Warehouse();
+        c.importProduct(a);
+        c.importProduct(b);
+        c.removeProduct("milk",1);
+        c.removeProduct("buttermilk",3);
+        c.decreaseQuantityInWarehouseByOne();
+        List<Item> l=new ArrayList<>();
+        for(Map.Entry<String,Item> m:c.getItems().entrySet()){
+            l.add(m.getValue());
+        }
+        c.takeFromItemToWarehouse(l,"milk",5);
+        c.takeFromItemToWarehouse(l,"buttermilk",1);
+    }
+}
