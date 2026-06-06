@@ -1,0 +1,182 @@
+import java.util.*;
+abstract class Spell{
+    private String name;
+    private int power;
+    public Spell(String name,int power){
+        this.name=name;
+        this.power=power;
+    }
+    public int getPower(){
+        return power;
+    }
+    public void setPower(int power){
+        this.power=power;
+    }
+    public abstract String getElement();
+}
+class FireSpell extends Spell{
+    public FireSpell(String name,int power){
+        super(name,power);
+    }
+    public String getElement(){
+        return "FireSpell";
+    }
+}
+class WaterSpell extends Spell{
+    public WaterSpell(String name,int power){
+        super(name,power);
+    }
+    public String getElement(){
+        return "WaterSpell";
+    }
+}
+class EarthSpell extends Spell{
+    public EarthSpell(String name,int power){
+        super(name,power);
+    }
+    public String getElement(){
+        return "EarthSpell";
+    }
+}
+class Student{
+    private String name;
+    private int competitionPoints;
+    private ArrayList<Spell> library;
+    public Student(String name){
+        this.name=name;
+        library=new ArrayList<>();
+        competitionPoints=0;
+    }
+    public void learnSpell(Spell s){
+        library.add(s);
+    }
+    public ArrayList<Spell> getLibrary(){
+        return library;
+    }
+    public int getCompetitionPoints(){
+        return competitionPoints;
+    }
+    public void setCompetitionPoints(int competitionPoints){
+        this.competitionPoints=competitionPoints;
+    }
+    public String getName(){
+        return name;
+    }
+    public boolean equals(Object obj){//cần phải có equals tự viết thì contains bên dưới mới chính xác
+        if(this==obj) return true;
+        if(!(obj instanceof Student)) return false;
+        Student other=(Student) obj;
+        return this.name.equals(other.name);
+    }
+}
+public class Main{
+    public static void sort(ArrayList<Student> stu){//sort phải dúng kiểu không thể dùng mảng
+        for(int i=0;i<stu.size()-1;i++){
+            for(int j=0;j<stu.size()-i-1;j++){
+                if(stu.get(j).getCompetitionPoints()<stu.get(j+1).getCompetitionPoints()){
+                    Student tmp=stu.get(j);
+                    stu.set(j,stu.get(j+1));//trong  ArrayList thì phải dùng set không thể gán bằng dấu =
+                    stu.set(j+1,tmp);
+                }
+            }
+        }
+    }
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        ArrayList<Student> stu=new ArrayList<>();
+        while(true){
+            String k=sc.nextLine();
+            if(k.equals("Trial")){
+                break;
+            }
+            String[] s=k.split(" ");
+            Spell f;
+            if(s[1].equals("FireSpell")){
+                f=new FireSpell(s[2],Integer.parseInt(s[3]));
+            }else if(s[1].equals("WaterSpell")){
+                f=new WaterSpell(s[2],Integer.parseInt(s[3]));
+            }else{
+                f=new EarthSpell(s[2],Integer.parseInt(s[3]));
+            }
+            Student q=new Student(s[0]);
+            if(!stu.contains(q)){//check 1 phần tử có trong ArrayList chưa
+                q.learnSpell(f);
+                stu.add(q);
+            }else{
+                int i= stu.indexOf(q);// tìm vị trí của phần tử đã có trong mảng
+                stu.get(i).learnSpell(f);
+            }
+        }
+        while(true){
+            String k=sc.nextLine();
+            if(k.equals("Graduation")){
+                sort(stu);
+                for(Student s:stu){
+                    System.out.println(s.getName()+" "+s.getCompetitionPoints()+" "+s.getLibrary().size());
+                }
+                return;
+            }
+            if(k.equals("Water")){
+                for(Student i:stu){
+                    boolean check=true;
+                    for(Spell j:i.getLibrary()){
+                        if(j instanceof WaterSpell){
+                            i.setCompetitionPoints(i.getCompetitionPoints()+1);
+                            check=false;
+                            break;
+                        }
+                    }
+                    if(check==true){
+                        for(int p=i.getLibrary().size()-1;p>=0;p--){// vì có xoá phần tử nên phải duyệt ngược lại để không sắp xếp lại mảng
+                            Spell j=i.getLibrary().get(p);
+                            j.setPower(j.getPower()-20);
+                            if(j.getPower()<=0){
+                                i.getLibrary().remove(p);
+                            }
+                        }
+                    }
+                }
+            }else if(k.equals("Fire")){
+                for(Student i:stu){
+                    boolean check=true;
+                    for(Spell j:i.getLibrary()){
+                        if(j instanceof FireSpell){
+                            i.setCompetitionPoints(i.getCompetitionPoints()+1);
+                            check=false;
+                            break;
+                        }
+                    }
+                    if(check==true){
+                        for(int p=i.getLibrary().size()-1;p>=0;p--){
+                            Spell j=i.getLibrary().get(p);
+                            j.setPower(j.getPower()-20);
+                            if(j.getPower()<=0){
+                                i.getLibrary().remove(p);
+                            }
+                        }
+                    }
+                }
+            }else{
+                for(Student i:stu){
+                    boolean check=true;
+                    for(Spell j:i.getLibrary()){
+                        if(j instanceof EarthSpell){
+                            i.setCompetitionPoints(i.getCompetitionPoints()+1);
+                            check=false;
+                            break;
+                        }
+                    }
+                    if(check==true){
+                        for(int p=i.getLibrary().size()-1;p>=0;p--){
+                            Spell j=i.getLibrary().get(p);
+                            j.setPower(j.getPower()-20);
+                            if(j.getPower()<=0){
+                                i.getLibrary().remove(p);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
