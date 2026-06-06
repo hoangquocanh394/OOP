@@ -1,0 +1,33 @@
+import java.util.*;
+class Amount{
+    private int amount;
+    private String currency;
+    public Amount(String currency,int amount){
+        this.currency=currency;
+        this.amount=amount;
+    }
+    public void add(Amount amount) throws Exception{
+        if(!this.currency.equals(amount.currency)){
+            throw new Exception("Currency doesn't match");
+        }
+        System.out.println(this.amount+amount.amount);
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        while(t-->0){
+            String s=sc.nextLine();
+            String[] k=s.split(" ");
+            Amount a=new Amount(k[0],Integer.parseInt(k[1]));
+            Amount b=new Amount(k[2],Integer.parseInt(k[3]));
+            try{
+                a.add(b);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
