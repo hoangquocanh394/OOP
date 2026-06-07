@@ -1,0 +1,76 @@
+import java.util.*;//bai nay can LinkedHashMap vi HashMap khong dam bao thu tu
+class Employee{
+    private String name;
+    private double salary;
+    private String department;
+    private String email="n/a";
+    private int age=-1;
+    public Employee(String name,double salary,String department){
+        this.name=name;
+        this.salary=salary;
+        this.department=department;
+    }
+    public String toString(){
+        return name+" "+String.format("%.2f",salary)+" "+email+" "+age;
+    }
+    public void setEmail(String email){
+        this.email=email;
+    }
+    public void setAge(int age){
+        this.age=age;
+    }
+    public String getDepartment(){
+        return department;
+    }
+    public double getSalary(){
+        return salary;
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        sc.nextLine();
+        LinkedHashMap<Employee,String> a=new LinkedHashMap<>();
+        while(t-->0){
+            String s=sc.nextLine();
+            String[] k=s.split(" ");
+            Employee e=new Employee(k[0],Double.parseDouble(k[1]),k[2]);
+            if(k.length>=4&& k[3].contains("@")){
+                e.setEmail(k[3]);
+            }
+            if(k.length==4&& !k[3].contains("@")){
+                e.setAge(Integer.parseInt(k[3]));
+            }
+            if(k.length==5){
+                e.setAge(Integer.parseInt(k[4]));
+            }
+            a.put(e,e.getDepartment());
+        }
+        LinkedHashMap<String,Double> b=new LinkedHashMap<>();
+        LinkedHashMap<String,Integer> c=new LinkedHashMap<>();
+        for(Map.Entry<Employee,String> i:a.entrySet()){
+            if(!b.containsKey(i.getValue())){
+                b.put(i.getValue(),i.getKey().getSalary());
+                c.put(i.getValue(),1);
+            }else{
+                b.put(i.getValue(),b.get(i.getValue())+i.getKey().getSalary());
+                c.put(i.getValue(),c.get(i.getValue())+1);
+            }
+        }
+        double k=0;
+        String h="";
+        for(Map.Entry<String,Double> i:b.entrySet()){
+            if(k<(i.getValue()/c.get(i.getKey()))){
+                k=i.getValue()/c.get(i.getKey());
+                h=i.getKey();
+            }
+        }
+        System.out.println("Highest Average Salary: "+h);
+        for(Map.Entry<Employee,String> i:a.entrySet()){
+            if(h.equals(i.getValue())){
+                System.out.println(i.getKey().toString());
+            }
+        }
+    }
+}
