@@ -1,0 +1,43 @@
+import java.util.*;
+class OverheatException extends Exception{
+    private String s;
+    public OverheatException(String s){
+        super(s);
+    }
+}
+class Reactor{
+    private double temperature;
+    public Reactor(double temperature){
+        this.temperature=temperature;
+    }
+    public double getTemperature(){
+        return temperature;
+    }
+    public void increaseTemperature(double amount) throws OverheatException,IllegalArgumentException{
+        if(amount <= 0) throw new IllegalArgumentException(String.format("Nhập: %d => Lỗi: Giá trị tăng phải lớn hơn 0.",(int)amount));
+        if(temperature + amount > 1000) throw new OverheatException(String.format("Nhập: %d => Lỗi: Vượt quá ngưỡng an toàn! Nhiệt độ nguy hiểm.",(int)amount));
+    }
+}
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        double a=sc.nextDouble();
+        Reactor r=new Reactor(a);
+        sc.nextLine();
+        while(true){
+            String k=sc.nextLine();
+            try{
+                r.increaseTemperature(Double.parseDouble(k));
+                System.out.printf("Nhiệt độ hiện tại: %.1fđộ C",Double.parseDouble(k)+r.getTemperature());
+                System.out.println();
+                break;
+            }catch(NumberFormatException e){
+                System.out.println("Nhập: "+k+" => Lỗi: Định dạng không hợp lệ.");
+            }catch(OverheatException e){
+                System.out.println(e.getMessage());
+            }catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
